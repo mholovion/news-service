@@ -1,0 +1,16 @@
+{{ define "title" }}{{ .Post.Title }}{{ end }}
+
+{{ define "content" }}
+<div class="post-detail">
+    <h1>{{ .Post.Title }}</h1>
+    <p>{{ .Post.Content }}</p>
+    <small>Posted on {{ .Post.CreatedAt.Format "Jan 2, 2006 at 3:04pm" }}</small>
+    <div class="post-actions">
+        <a href="/post/{{ .Post.ID.Hex }}/edit" class="btn-edit">Edit</a>
+        <form action="/post/{{ .Post.ID.Hex }}/delete" method="post" class="inline-form">
+            <button type="submit" class="btn-delete">Delete</button>
+        </form>
+    </div>
+</div>
+{{ end }}
+{{ define "show" }}{{ template "layout" . }}{{ end }}

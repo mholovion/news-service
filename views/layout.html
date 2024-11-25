@@ -1,0 +1,33 @@
+{{ define "layout" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ block "title" . }}News Service{{ end }}</title>
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <a href="/">Home</a>
+                <a href="/new">Create Post</a>
+            </div>
+            <div class="nav-right">
+                <form method="GET" action="/" hx-boost="true">
+                    <input type="text" name="search" placeholder="Search news..." value="{{ .Search }}">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {{ template "content" . }}
+    </main>
+    <footer>
+        <p>&copy; News Service</p>
+    </footer>
+</body>
+</html>
+{{ end }}`

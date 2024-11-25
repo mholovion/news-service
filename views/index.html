@@ -1,0 +1,35 @@
+{{ define "title" }}Latest News{{ end }}
+
+{{ define "content" }}
+<h1>Latest News</h1>
+<div id="posts">
+    {{ if .Posts }}
+        {{ if gt (len .Posts) 0 }}
+            {{ range .Posts }}
+                <div class="post-card">
+                    <h2><a href="/post/{{ .ID.Hex }}">{{ .Title }}</a></h2>
+                    <p>{{ .Content | printf "%.150s" }}...</p>
+                    <a href="/post/{{ .ID.Hex }}" class="read-more">Read more</a>
+                    <small>Posted on {{ .CreatedAt.Format "Jan 2, 2006 at 3:04pm" }}</small>
+                </div>
+            {{ end }}
+        {{ else }}
+            <p>No posts found.</p>
+        {{ end }}
+    {{ else }}
+        <p>No posts found.</p>
+    {{ end }}
+</div>
+
+<div class="pagination">
+    {{ if gt .CurrentPage 1 }}
+        <button hx-get="/?page={{ sub .CurrentPage 1 }}&search={{ .Search }}" hx-target="#posts" hx-swap="innerHTML">Previous</button>
+    {{ end }}
+    {{ if lt .CurrentPage .TotalPages }}
+        <button hx-get="/?page={{ add .CurrentPage 1 }}&search={{ .Search }}" hx-target="#posts" hx-swap="innerHTML">Next</button>
+    {{ end }}
+</div>
+{{ end }}
+{{ define "index" }}
+    {{ template "layout" . }}
+{{ end }}

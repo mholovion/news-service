@@ -1,0 +1,211 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header and Navigation */
+header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+}
+
+.nav-left a {
+    margin-right: 1em;
+    font-weight: bold;
+    color: #333;
+}
+
+.nav-right form {
+    display: flex;
+}
+
+.nav-right input[type="text"] {
+    padding: 0.5em;
+    border: 1px solid #ced4da;
+    border-radius: 4px 0 0 4px;
+}
+
+.nav-right button {
+    padding: 0.5em 1em;
+    border: 1px solid #ced4da;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.nav-right button:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content */
+main {
+    padding: 2em;
+}
+
+h1 {
+    margin-bottom: 1em;
+}
+
+/* Post Cards */
+.post-card {
+    border: 1px solid #e0e0e0;
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.post-card h2 {
+    margin-top: 0;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 0.5em;
+    color: #007BFF;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.post-card small {
+    display: block;
+    margin-top: 1em;
+    color: #6c757d;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.pagination button {
+    padding: 0.5em 1em;
+    margin: 0 0.5em;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #e9ecef;
+}
+
+/* Forms */
+.post-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5em;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.btn-submit {
+    padding: 0.75em 1.5em;
+    border: none;
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: #218838;
+}
+
+/* Post Detail */
+.post-detail h1 {
+    margin-top: 0;
+}
+
+.post-detail small {
+    color: #6c757d;
+}
+
+.post-actions {
+    margin-top: 2em;
+}
+
+.post-actions .btn-edit,
+.post-actions .btn-delete {
+    padding: 0.5em 1em;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 0.5em;
+    text-decoration: none;
+}
+
+.btn-edit {
+    background-color: #007BFF;
+}
+
+.btn-edit:hover {
+    background-color: #0056b3;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-bottom: 1em;
+}
+
+/* Footer */
+footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+    padding: 1em;
+    margin-top: 2em;
+    color: #6c757d;
+}
