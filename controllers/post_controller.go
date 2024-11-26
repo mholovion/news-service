@@ -31,7 +31,12 @@ var (
 const pageSize = 5
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
+	renderTemplateWithBlock(w, tmpl, data, "layout")
+}
+
+func renderTemplateWithBlock(w http.ResponseWriter, tmpl string, data interface{}, block string) {
 	tmplPath := fmt.Sprintf("views/%s.html", tmpl)
+
 	templates, err := template.New("").Funcs(funcMap).ParseFiles("views/layout.html", tmplPath)
 	if err != nil {
 		log.Printf("Error parsing templates: %v", err)
@@ -40,7 +45,13 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	}
 
 	var buf bytes.Buffer
-	err = templates.ExecuteTemplate(&buf, "layout", data)
+
+	if block != "" {
+		err = templates.ExecuteTemplate(&buf, block, data)
+	} else {
+		err = templates.ExecuteTemplate(&buf, "layout", data)
+	}
+
 	if err != nil {
 		log.Printf("Error executing template %s: %v", tmpl, err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -54,8 +65,9 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		data := struct {
-			Error string
-			Post  models.Post
+			Error  string
+			Post   models.Post
+			Search string
 		}{}
 		renderTemplate(w, "new", data)
 	case "POST":
@@ -70,11 +82,13 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		err := validate.Struct(input)
 		if err != nil {
 			data := struct {
-				Error string
-				Post  models.Post
+				Error  string
+				Post   models.Post
+				Search string
 			}{
-				Error: err.Error(),
-				Post:  input,
+				Error:  err.Error(),
+				Post:   input,
+				Search: "",
 			}
 			w.WriteHeader(http.StatusBadRequest)
 			renderTemplate(w, "new", data)
@@ -158,6 +172,12 @@ func ReadPosts(w http.ResponseWriter, r *http.Request) {
 		Search:      search,
 	}
 
+	if r.Header.Get("HX-Request") != "" {
+		log.Println("HTMX request detected")
+		renderTemplateWithBlock(w, "index", data, "content")
+		return
+	}
+
 	renderTemplate(w, "index", data)
 }
 
@@ -189,9 +209,11 @@ func ReadPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := struct {
-		Post models.Post
+		Post   models.Post
+		Search string
 	}{
-		Post: post,
+		Post:   post,
+		Search: "",
 	}
 
 	renderTemplate(w, "show", data)
@@ -224,10 +246,12 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 		}
 
 		data := struct {
-			Error string
-			Post  models.Post
+			Error  string
+			Post   models.Post
+			Search string
 		}{
-			Post: post,
+			Post:   post,
+			Search: "",
 		}
 
 		renderTemplate(w, "edit", data)
@@ -244,11 +268,13 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 		err := validate.Struct(input)
 		if err != nil {
 			data := struct {
-				Error string
-				Post  models.Post
+				Error  string
+				Post   models.Post
+				Search string
 			}{
-				Error: err.Error(),
-				Post:  input,
+				Error:  err.Error(),
+				Post:   input,
+				Search: "",
 			}
 			renderTemplate(w, "edit", data)
 			return
